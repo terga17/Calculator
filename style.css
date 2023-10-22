@@ -1,24 +1,10 @@
-/* 
-.btn-container{
-    display: flex;
-    background-color: aquamarine;
-    justify-content: center;
-    width: fit-content;
-    border: 1px solid black;
-    width: 70%;
+*{
+    font-family: 'Montserrat', sans-serif;
 }
 
-.btn-container button{
-    border: 1px solid black;
-    padding: 5px;
-    font-size: 20px;
+body{
+    background-color: #dcf5f893;
 }
-
-#clear, #delete{
-    font-size: small;
-    border: 1px solid black;
-}
-*/
 .calculator{
     display: flex;
     flex-direction: column;
@@ -29,26 +15,55 @@
 
 .display{
     font-size: 25px;
-    text-align: right;              /*overflow fix*/
-    border: 1px solid black;
+    text-align: right;              
+    border: 1px solid #53a8b6;
+    min-height: 70px;
+    max-width: 228px;
+    word-wrap: break-word;
+    background-color: #bbe4e965;
+    color: #48729c;
 } 
 
 .btn-grid{
     display: grid;
     grid-template-columns: 60px 60px 60px 50px;
-    grid-template-rows: 30px 30px 30px 30px 30px 30px;
+    grid-template-rows: 45px 45px 45px 45px 45px 45px;
 }
 
 #clear{
     grid-column-start: 1;
     grid-column-end: 3;
+    background-color: #48729c;
 }
 
 #delete{
     grid-column-start: 3;
     grid-column-end: 5;
+    background-color: #48729c;
+}
+
+#clear:hover, #delete:hover{
+    background-color: #264f75;
 }
 
 .small-screen{
     font-size: 20px;
+}
+
+.btn-grid > button{
+    outline: none;
+    border: 1px solid #bbe4e9;
+    border-radius: 2px;
+    background-color: #79c2d0;
+    color: white;
+    font-size: 21px;
+}
+
+.btn-grid > button:hover{
+    background-color: #51a1b1;
+}
+
+.bottom{
+    text-align: center;
+    color: #264f75;
 }
