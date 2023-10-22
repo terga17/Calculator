@@ -16,7 +16,6 @@ function divide(a, b){
     return a / b;
 }
 
-
 function operate(op, num, otherNum){        //forgot to return a value
     let result;
     switch (op) {
@@ -30,7 +29,11 @@ function operate(op, num, otherNum){        //forgot to return a value
             result = multiply(num, otherNum);
             break;    
         case "/":
-            result = divide(num, otherNum);
+            if(otherNum === 0){
+                result = "ARE U STUPID?";
+            } else{
+                result = divide(num, otherNum);
+            }
             break;
         default:
             break;
@@ -61,10 +64,18 @@ function clearDisplay(){
 
 const addBtn = document.querySelector(".add");
 const subtractBtn = document.querySelector(".sub");
+const multBtn = document.querySelector(".mult");
+const divideBtn = document.querySelector(".divide");
+const clearBtn = document.querySelector("#clear");
+const deleteBtn = document.querySelector("#delete");
+const dotBtn = document.querySelector("#dot");
+
+
+
 
 
 addBtn.addEventListener("click", () => {
-    bigValue.textContent += "+";
+    bigValue.textContent += " + ";
     smallValue.textContent = bigValue.textContent;
     bigValue.textContent = "";
     operator = "+";
@@ -72,10 +83,24 @@ addBtn.addEventListener("click", () => {
 
 
 subtractBtn.addEventListener("click", () => {
-    bigValue.textContent += "-";
+    bigValue.textContent += " - ";
     smallValue.textContent = bigValue.textContent;
     bigValue.textContent = "";
     operator = "-";
+});
+
+multBtn.addEventListener("click", () => {
+    bigValue.textContent += " * ";
+    smallValue.textContent = bigValue.textContent;
+    bigValue.textContent = "";
+    operator = "*";
+});
+
+divideBtn.addEventListener("click", () => {
+    bigValue.textContent += " ÷ ";
+    smallValue.textContent = bigValue.textContent;
+    bigValue.textContent = "";
+    operator = "/";
 });
 
 equal.addEventListener("click", () => {
@@ -86,7 +111,22 @@ equal.addEventListener("click", () => {
     let result = operate(operator, num, otherNum);
     clearDisplay();
     bigValue.textContent = result;
-})
+});
+
+clearBtn.addEventListener("click", clearDisplay);
+
+
+deleteBtn.addEventListener("click", () => {
+    let size = bigValue.textContent.length - 1;
+    let slice = bigValue.textContent.slice(0, size);
+    bigValue.textContent = slice;
+});
+
+// dotBtn.addEventListener("click", () => {     //equal eventListener doesnt count the , as part of number
+//    bigValue.textContent += ".";
+//    isDot = true;
+//    let isDot = false;
+// });
 
 
 
