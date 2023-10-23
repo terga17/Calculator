@@ -73,35 +73,63 @@ const dotBtn = document.querySelector("#dot");
 
 
 
+let isEval = false;
 
 addBtn.addEventListener("click", () => {
+    if(isEval){
+        evaluate();
+    }
     bigValue.textContent += " + ";
     smallValue.textContent = bigValue.textContent;
     bigValue.textContent = "";
     operator = "+";
+    isEval = true;
 });
 
 
 subtractBtn.addEventListener("click", () => {
+    if(isEval){
+        evaluate();
+    }
     bigValue.textContent += " - ";
     smallValue.textContent = bigValue.textContent;
     bigValue.textContent = "";
     operator = "-";
+    isEval = true;
 });
 
 multBtn.addEventListener("click", () => {
+    if(isEval){
+        evaluate();
+    }
     bigValue.textContent += " * ";
     smallValue.textContent = bigValue.textContent;
     bigValue.textContent = "";
     operator = "*";
+    isEval = true;
 });
 
 divideBtn.addEventListener("click", () => {
+    if(isEval){
+        evaluate();
+    }
     bigValue.textContent += " ÷ ";
     smallValue.textContent = bigValue.textContent;
     bigValue.textContent = "";
     operator = "/";
+    isEval = true;
 });
+
+function evaluate(){
+    num = Number(smallValue.textContent.replace(/[^0-9]/g,""));
+    otherNum = Number(bigValue.textContent);
+    console.log(num, otherNum);
+    console.log(operator);
+    let result = operate(operator, num, otherNum);
+    clearDisplay();
+    bigValue.textContent = result;
+    isEval = false;
+}
 
 equal.addEventListener("click", () => {
     num = Number(smallValue.textContent.replace(/[^0-9]/g,""));     //regular expression-nonNumeric gets replace by empty string
