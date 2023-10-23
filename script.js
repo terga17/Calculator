@@ -60,6 +60,8 @@ buttons.forEach(btn => {
 function clearDisplay(){
     smallValue.textContent = " ";
     bigValue.textContent = " ";
+    isDot = false;
+    dotBtn.classList.remove("pressDot");
 }
 
 const addBtn = document.querySelector(".add");
@@ -69,9 +71,6 @@ const divideBtn = document.querySelector(".divide");
 const clearBtn = document.querySelector("#clear");
 const deleteBtn = document.querySelector("#delete");
 const dotBtn = document.querySelector("#dot");
-
-
-
 
 let isEval = false;
 
@@ -84,6 +83,8 @@ addBtn.addEventListener("click", () => {
     bigValue.textContent = "";
     operator = "+";
     isEval = true;
+    isDot = false;
+    dotBtn.classList.remove("pressDot");
 });
 
 
@@ -96,17 +97,21 @@ subtractBtn.addEventListener("click", () => {
     bigValue.textContent = "";
     operator = "-";
     isEval = true;
+    isDot = false;
+    dotBtn.classList.remove("pressDot");
 });
 
 multBtn.addEventListener("click", () => {
     if(isEval){
         evaluate();
     }
+    isEval = true;
     bigValue.textContent += " * ";
     smallValue.textContent = bigValue.textContent;
     bigValue.textContent = "";
     operator = "*";
-    isEval = true;
+    isDot = false;
+    dotBtn.classList.remove("pressDot");
 });
 
 divideBtn.addEventListener("click", () => {
@@ -118,27 +123,40 @@ divideBtn.addEventListener("click", () => {
     bigValue.textContent = "";
     operator = "/";
     isEval = true;
+    isDot = false;
+    dotBtn.classList.remove("pressDot");
 });
 
 function evaluate(){
-    num = Number(smallValue.textContent.replace(/[^0-9]/g,""));
+    isEval = false;
+    num = Number(smallValue.textContent.replace(/[^0-9.]/g,""));
     otherNum = Number(bigValue.textContent);
     console.log(num, otherNum);
     console.log(operator);
     let result = operate(operator, num, otherNum);
     clearDisplay();
     bigValue.textContent = result;
-    isEval = false;
 }
 
+function isInt(n){
+    return Number(n) === n && n % 1 === 0;
+}
+
+
 equal.addEventListener("click", () => {
-    num = Number(smallValue.textContent.replace(/[^0-9]/g,""));     //regular expression-nonNumeric gets replace by empty string
+    num = Number(smallValue.textContent.replace(/[^0-9.]/g,""));     //regular expression-nonNumeric gets replace by empty string
     otherNum = Number(bigValue.textContent);
     console.log(num, otherNum);
     console.log(operator);
     let result = operate(operator, num, otherNum);
     clearDisplay();
-    bigValue.textContent = result;
+    if(isInt(result)){
+        bigValue.textContent = result;
+    } else{
+        bigValue.textContent = result.toFixed(2);
+    }
+    isEval = false;
+    isDot = false;
 });
 
 clearBtn.addEventListener("click", clearDisplay);
@@ -147,14 +165,24 @@ clearBtn.addEventListener("click", clearDisplay);
 deleteBtn.addEventListener("click", () => {
     let size = bigValue.textContent.length - 1;
     let slice = bigValue.textContent.slice(0, size);
+    let dot = bigValue.textContent.slice(size, size + 1);
+    if(dot == "."){
+        dotBtn.classList.remove("pressDot");
+        isDot = false;
+    }
     bigValue.textContent = slice;
 });
 
-// dotBtn.addEventListener("click", () => {     //equal eventListener doesnt count the , as part of number
-//    bigValue.textContent += ".";
-//    isDot = true;
-//    let isDot = false;
-// });
+let isDot = false;
+
+dotBtn.addEventListener("click", () => {     //equal eventListener doesnt count the , as part of number
+   if(isDot){
+    return 0;
+   } 
+   bigValue.textContent += ".";
+   dotBtn.classList.add("pressDot");
+   isDot = true;
+});
 
 
 
