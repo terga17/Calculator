@@ -67,3 +67,8 @@ body{
     text-align: center;
     color: #264f75;
 }
+
+.pressDot{
+    background-color: #51a1b1 !important;
+    color: black !important;
+}
