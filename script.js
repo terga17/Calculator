@@ -16,7 +16,7 @@ function divide(a, b){
     return a / b;
 }
 
-function operate(op, num, otherNum){        //forgot to return a value
+function operate(op, num, otherNum){        
     let result;
     switch (op) {
         case "+":
@@ -30,7 +30,7 @@ function operate(op, num, otherNum){        //forgot to return a value
             break;    
         case "/":
             if(otherNum === 0){
-                result = "ARE U STUPID?";
+                result = NaN;
             } else{
                 result = divide(num, otherNum);
             }
@@ -51,7 +51,6 @@ let equal = document.querySelector(".eql");
 
 buttons.forEach(btn => {
     btn.addEventListener("click", () => {
-        console.log(Number(btn.textContent))        //delete after
         bigValue.textContent += btn.textContent;
     });
     displayValue = Number(bigValue.textContent);
@@ -131,11 +130,19 @@ function evaluate(){
     isEval = false;
     num = Number(smallValue.textContent.replace(/[^0-9.]/g,""));
     otherNum = Number(bigValue.textContent);
-    console.log(num, otherNum);
-    console.log(operator);
-    let result = operate(operator, num, otherNum);
-    clearDisplay();
-    bigValue.textContent = result;
+    if(isNaN(num) || isNaN(otherNum)){
+        clearDisplay();
+        bigValue.textContent = "ERROR";
+    } else if(isDot == true){
+        dotBtn.classList.add("pressDot");
+        let result = operate(operator, num, otherNum);
+        clearDisplay();
+        bigValue.textContent = result;
+    } else{
+        let result = operate(operator, num, otherNum);
+        clearDisplay();
+        bigValue.textContent = result;
+    }
 }
 
 function isInt(n){
@@ -146,14 +153,12 @@ function isInt(n){
 equal.addEventListener("click", () => {
     num = Number(smallValue.textContent.replace(/[^0-9.]/g,""));     //regular expression-nonNumeric gets replace by empty string
     otherNum = Number(bigValue.textContent);
-    console.log(num, otherNum);
-    console.log(operator);
     let result = operate(operator, num, otherNum);
     clearDisplay();
     if(isInt(result)){
         bigValue.textContent = result;
     } else{
-        bigValue.textContent = result.toFixed(2);
+        bigValue.textContent = result.toFixed(5);
     }
     isEval = false;
     isDot = false;
@@ -175,9 +180,9 @@ deleteBtn.addEventListener("click", () => {
 
 let isDot = false;
 
-dotBtn.addEventListener("click", () => {     //equal eventListener doesnt count the , as part of number
+dotBtn.addEventListener("click", () => {   
    if(isDot){
-    return 0;
+    return;
    } 
    bigValue.textContent += ".";
    dotBtn.classList.add("pressDot");
